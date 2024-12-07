@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package doctor;
+
+option go_package = "../doctor-service/proto";
+
+service DoctorService {
+    rpc AddDoctor (AddDoctorRequest) returns (DoctorResponse);
+    rpc RemoveDoctor (RemoveDoctorRequest) returns (RemoveDoctorResponse);
+    rpc ListDoctors (ListDoctorsRequest) returns (ListDoctorsResponse);
+    rpc CheckAvailability (AvailabilityRequest) returns (AvailabilityResponse);
+}
+
+message AddDoctorRequest {
+    string name = 1;
+    string specialty = 2;
+}
+
+message DoctorResponse {
+    string doctor_id = 1;
+    string name = 2;
+    string specialty = 3;
+}
+
+message RemoveDoctorRequest {
+    string doctor_id = 1;
+}
+
+message RemoveDoctorResponse {
+    bool success = 1; // Indicates whether the removal was successful
+}
+
+message ListDoctorsRequest {}
+
+message ListDoctorsResponse {
+    repeated Doctor doctors = 1;
+}
+
+message Doctor {
+    string doctor_id = 1;
+    string name = 2;
+    string specialty = 3;
+}
+
+message AvailabilityRequest {
+    string doctor_id = 1;
+    string date = 2; // Date format can be defined as needed
+}
+
+message AvailabilityResponse {
+    bool is_available = 1;
+}
+
